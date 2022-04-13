@@ -84,6 +84,23 @@ By this way, i remove the first left white line.
 
 ![](./img/line_screenshot_13.04.2022_1.png)
 
+For color the area between two lines, i just iterate the whole image and check the point, if the point is between the two lines, change its color to red.
+
+```c++
+float r1 = line1[0][0]; 
+float theta1 = line1[0][1]
+float r2 = line2[0][0];
+float theta2 = line2[0][1]
+for(int i = src.rows - 1; i >= 0; i--) {
+    for(int j = 0; j < src.cols; j++) {
+        if(j * sin(theta2) + i * cos(theta2) < abs(r2) && j * sin(theta1) + i * cos(theta1) > r1)
+            src.at<Vec3b>(i, j) = Vec3b(0, 0, 255);
+    }
+}
+```
+
+![](./img/line_screenshot_13.04.2022_2.png)
+
 ## Task4
 Task4 is to detect the circle in the image, just use `HoughCircles`.
 

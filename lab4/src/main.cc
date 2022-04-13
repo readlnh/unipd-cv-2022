@@ -86,8 +86,22 @@ public:
         vector<Vec2f> line2;
         HoughLines( dst, line2, 1, CV_PI / 90, 120, 0, 0 , 2.26, 2.44);
         
-        drawLine(&src, line1[0][0], line1[0][1]);
-        drawLine(&src, line2[0][0], line2[0][1]);
+        // drawLine(&src, line1[0][0], line1[0][1]);
+        // drawLine(&src, line2[0][0], line2[0][1]);
+
+
+        float r1 = line1[0][0]; 
+        float theta1 = line1[0][1];
+
+        float r2 = line2[0][0];
+        float theta2 = line2[0][1];
+
+        for(int i = src.rows - 1; i >= 0; i--) {
+            for(int j = 0; j < src.cols; j++) {
+                if(j * sin(theta2) + i * cos(theta2) < abs(r2) && j * sin(theta1) + i * cos(theta1) > r1)
+                    src.at<Vec3b>(i, j) = Vec3b(0, 0, 255);
+            }
+        }
 
         imshow("line", src);
     }
