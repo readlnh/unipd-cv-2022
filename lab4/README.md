@@ -58,7 +58,7 @@ void colorThreshold(int T, Mat *src) {
 
 Then blur the image and use Canny to find out the edges:
 
-[](./img/dst_screenshot_13.04.2022.png)
+![](./img/dst_screenshot_13.04.2022.png)
 
 Now it's easy to detect the **"white"** lines.
 
@@ -66,6 +66,7 @@ Now it's easy to detect the **"white"** lines.
 vector<Vec2f> lines;
 HoughLines( dst, lines, 1, CV_PI / 90, 120, 0, 0 );
 ```
+![](img/line_screenshot_13.04.2022.png)
 
 ## Task4
 Task4 is to detect the circle in the image, just use `HoughCircles`.
@@ -73,3 +74,7 @@ Task4 is to detect the circle in the image, just use `HoughCircles`.
 ```c++
 HoughCircles(src_gray, circles, HOUGH_GRADIENT_ALT, 1.5, src_gray.rows / 16, 500, 0.8, 1, 30);
 ```
+
+I choose `HOUGH_GRADIENT_ALT`, set the `minRadius` to `1` and the `maxRadius` to `30`.
+
+![](./img/detected%20circles_screenshot_13.04.2022.png)
