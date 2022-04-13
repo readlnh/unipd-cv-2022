@@ -65,22 +65,42 @@ public:
 
         
 
-        vector<Vec2f> lines;
-        HoughLines( dst, lines, 1, CV_PI / 90, 120, 0, 0 );
+        // vector<Vec2f> lines;
+        // HoughLines( dst, lines, 1, CV_PI / 90, 120, 0, 0 );
 
-        for( size_t i = 0; i < lines.size(); i++ ) {
-            float rho = lines[i][0], theta = lines[i][1];
-            Point pt1, pt2;
-            double a = cos(theta), b = sin(theta);
-            double x0 = a*rho, y0 = b*rho;
-            pt1.x = cvRound(x0 + 1000*(-b));
-            pt1.y = cvRound(y0 + 1000*(a));
-            pt2.x = cvRound(x0 - 1000*(-b));
-            pt2.y = cvRound(y0 - 1000*(a));
-            line( src, pt1, pt2, Scalar(0,0,255), 3, LINE_AA);
-        }
+        // for( size_t i = 0; i < lines.size(); i++ ) {
+        //     float rho = lines[i][0], theta = lines[i][1];
+        //     Point pt1, pt2;
+        //     double a = cos(theta), b = sin(theta);
+        //     double x0 = a*rho, y0 = b*rho;
+        //     pt1.x = cvRound(x0 + 1000*(-b));
+        //     pt1.y = cvRound(y0 + 1000*(a));
+        //     pt2.x = cvRound(x0 - 1000*(-b));
+        //     pt2.y = cvRound(y0 - 1000*(a));
+        //     line( src, pt1, pt2, Scalar(0,0,255), 3, LINE_AA);
+        // }
+
+        
+        vector<Vec2f> line1;
+        HoughLines( dst, line1, 1, CV_PI / 90, 120, 0, 0 , 0.7, 0.9 );
+        vector<Vec2f> line2;
+        HoughLines( dst, line2, 1, CV_PI / 90, 120, 0, 0 , 2.26, 2.44);
+        
+        drawLine(&src, line1[0][0], line1[0][1]);
+        drawLine(&src, line2[0][0], line2[0][1]);
 
         imshow("line", src);
+    }
+
+    void drawLine(Mat* src, float rho, float theta) {
+        Point pt1, pt2;
+        double a = cos(theta), b = sin(theta);
+        double x0 = a*rho, y0 = b*rho;
+        pt1.x = cvRound(x0 + 1000*(-b));
+        pt1.y = cvRound(y0 + 1000*(a));
+        pt2.x = cvRound(x0 - 1000*(-b));
+        pt2.y = cvRound(y0 - 1000*(a));
+        line( *src, pt1, pt2, Scalar(0,0,255), 3, LINE_AA);
     }
 
     void colorThreshold(int T, Mat *src) {
@@ -121,7 +141,7 @@ public:
         /***** HOUGH_GRADIENT works well too *****/
         // HoughCircles(src_gray, circles, HOUGH_GRADIENT, 1.5, src_gray.rows / 16, 300, 30, 5, 10);
 
-        cout << circles.size() << endl;
+        //cout << circles.size() << endl;
         
         for( size_t i = 0; i < circles.size(); i++ ) {
             Vec3i c = circles[i];

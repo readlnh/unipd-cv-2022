@@ -31,6 +31,9 @@ Task1() {
 }
 ```
 
+## Task2
+My idea is to remove the element that is not white in the picture(the white markings are always white, obviously ^_^). That is also what i do in task3.
+
 ## Task3
 In task3 we need to detect white markings on the road by Hough transform. However, there are too many lines in the picture. So i decide to do some pre-operation. Since we only need white marking, so i remove all the element that is far from the color "white":
 
@@ -67,6 +70,19 @@ vector<Vec2f> lines;
 HoughLines( dst, lines, 1, CV_PI / 90, 120, 0, 0 );
 ```
 ![](img/line_screenshot_13.04.2022.png)
+
+My team mate reminds me that we can set angles for `HoughLines`:
+
+```c++
+vector<Vec2f> line1;
+HoughLines( dst, line1, 1, CV_PI / 90, 120, 0, 0 , 0.7, 0.9 );
+vector<Vec2f> line2;
+HoughLines( dst, line2, 1, CV_PI / 90, 120, 0, 0 , 2.26, 2.44);
+```
+
+By this way, i remove the first left white line.
+
+![](./img/line_screenshot_13.04.2022_1.png)
 
 ## Task4
 Task4 is to detect the circle in the image, just use `HoughCircles`.
